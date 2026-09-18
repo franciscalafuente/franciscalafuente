@@ -8,12 +8,19 @@
     {
       mobile: "assets/images/entrance-art.webp",
       desktop: "assets/images/entrance-art-desktop.webp",
-      position: "center"
+      position: "center",
+      mobileTopTranslate: "0 0",
+      mobileBottomTranslate: "0 -2.5%",
+      desktopTopTranslate: "0 2.8%",
+      desktopBottomTranslate: "0 -3.5%"
     },
     {
       mobile: "assets/images/entrance-rotation-02-mobile.webp",
-      desktop: "assets/images/entrance-rotation-02-desktop.webp",
-      position: "center"
+      desktop: "assets/images/entrance-etching-original.jpeg",
+      mobilePosition: "center",
+      desktopPosition: "center",
+      mobileScale: 1,
+      desktopScale: 1.52
     },
     {
       mobile: "assets/images/entrance-rotation-03-mobile.webp",
@@ -30,15 +37,16 @@
   const landscape = window.matchMedia("(orientation: landscape)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const tracks = {
-    top: createTrack(entrance.querySelector(".entrance__strip--top"), "right"),
-    bottom: createTrack(entrance.querySelector(".entrance__strip--bottom"), "left")
+    top: createTrack(entrance.querySelector(".entrance__strip--top"), "right", "Top"),
+    bottom: createTrack(entrance.querySelector(".entrance__strip--bottom"), "left", "Bottom")
   };
 
-  function createTrack(element, direction) {
+  function createTrack(element, direction, part) {
     return {
       current: element.querySelector(".entrance__slide--current"),
       next: element.querySelector(".entrance__slide--next"),
       direction: direction,
+      part: part,
       index: 0,
       moving: false
     };
@@ -49,18 +57,25 @@
     return landscape.matches ? work.desktop : work.mobile;
   }
 
-  function setImage(image, work) {
+  function setImage(image, work, part) {
+    const isLandscape = landscape.matches;
+    const mode = isLandscape ? "desktop" : "mobile";
     image.src = sourceFor(work);
-    image.style.objectPosition = work.position || "center";
+    image.style.objectPosition = (isLandscape ? work.desktopPosition : work.mobilePosition) || work.position || "center";
+    image.style.setProperty("--entrance-image-scale", String((isLandscape ? work.desktopScale : work.mobileScale) || 1));
+    image.style.setProperty(
+      "--entrance-image-translate",
+      work[mode + part + "Translate"] || (isLandscape ? work.desktopTranslate : work.mobileTranslate) || "0 0"
+    );
   }
 
   function delay(milliseconds) {
     return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
   }
 
-  function loadImage(image, work) {
+  function loadImage(image, work, part) {
     return new Promise((resolve) => {
-      setImage(image, work);
+      setImage(image, work, part);
 
       if (image.complete && image.naturalWidth > 0) {
         resolve();
@@ -73,7 +88,7 @@
   }
 
   async function move(track, nextIndex) {
-    await loadImage(track.next, works[nextIndex]);
+    await loadImage(track.next, works[nextIndex], track.part);
 
     return new Promise((resolve) => {
       const incoming = track.next;
@@ -121,12 +136,12 @@
 
   function refreshResponsiveImages() {
     Object.values(tracks).forEach((track) => {
-      if (!track.moving) setImage(track.current, works[track.index]);
+      if (!track.moving) setImage(track.current, works[track.index], track.part);
     });
   }
 
-  setImage(tracks.top.current, works[0]);
-  setImage(tracks.bottom.current, works[0]);
+  setImage(tracks.top.current, works[0], tracks.top.part);
+  setImage(tracks.bottom.current, works[0], tracks.bottom.part);
   landscape.addEventListener("change", refreshResponsiveImages);
 
   works.forEach((work) => {

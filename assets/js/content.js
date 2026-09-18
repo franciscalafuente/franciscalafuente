@@ -119,7 +119,8 @@ window.PORTFOLIO_DATA = {
           alt: "Sobre a raiz installation with angular white panels and a framed etching",
           title: "Sobre a raiz - Livro de artista de gravura",
           details: "2022. Metal, contraplacado revestido a melamina, água-forte s/papel [6 elementos]. 81 x 102 x 102 cm",
-          size: "wide"
+          size: "wide",
+          desktopCentered: true
         },
         {
           src: "assets/images/sobre-raiz-detail.webp",
@@ -174,7 +175,8 @@ window.PORTFOLIO_DATA = {
           alt: "It’s not a matter of choice, it’s a matter of uselessness, front view",
           title: "It’s not a matter of choice, it’s a matter of uselessness",
           details: "2024. Chapa de aço galvanizado pintada com pulverização a tinta acrílica com 2 componentes, grés, acrílico, vinil adesivo, areia e água. 32 × 22,5 × 8 cm",
-          size: "wide"
+          size: "wide",
+          desktopCentered: true
         },
         {
           src: "assets/images/uselessness-top.webp",
@@ -208,7 +210,8 @@ window.PORTFOLIO_DATA = {
           alt: "As pedras mantêm-se as mesmas, stacked sculptural form",
           title: "As pedras mantêm-se as mesmas",
           details: "2024. Tecido, cola branca, tinta de guache, cartão e grés (vidrado). 117,5 × 69,5 × 26 cm",
-          size: "portrait"
+          size: "portrait",
+          desktopCentered: true
         }
       ]
     },

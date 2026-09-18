@@ -54,7 +54,7 @@ body.menu-open {
   min-height: 100vh;
   min-height: 100svh;
   overflow: hidden;
-  background: #f8f7f5;
+  background: #fff;
 }
 
 .entrance {
@@ -64,7 +64,7 @@ body.menu-open {
   inset: 0;
   display: block;
   overflow: hidden;
-  background: #f8f7f5;
+  background: #fff;
   cursor: pointer;
 }
 
@@ -78,11 +78,11 @@ body.menu-open {
 }
 
 .entrance__strip--top {
-  clip-path: inset(0 0 calc(100% - var(--entrance-upper-edge)) 0);
+  clip-path: inset(0 0 calc(100% - var(--entrance-upper-edge) - 2px) 0);
 }
 
 .entrance__strip--bottom {
-  clip-path: inset(var(--entrance-lower-edge) 0 0 0);
+  clip-path: inset(calc(var(--entrance-lower-edge) - 2px) 0 0 0);
 }
 
 .entrance__slide {
@@ -93,7 +93,10 @@ body.menu-open {
   max-width: none;
   object-fit: cover;
   object-position: center;
+  scale: var(--entrance-image-scale, 1);
+  translate: var(--entrance-image-translate, 0 0);
   transform: translateX(0);
+  transform-origin: center;
   will-change: transform;
 }
 
@@ -104,11 +107,11 @@ body.menu-open {
 .entrance__signature-band {
   position: absolute;
   z-index: 2;
-  top: var(--entrance-upper-edge);
+  top: calc(var(--entrance-upper-edge) - 1px);
   right: 0;
-  bottom: calc(100% - var(--entrance-lower-edge));
+  bottom: calc(100% - var(--entrance-lower-edge) - 1px);
   left: 0;
-  background: #f8f7f5;
+  background: #fff;
 }
 
 .entrance__signature {
@@ -1025,6 +1028,10 @@ main {
     width: auto;
     max-width: 100%;
     height: auto;
+  }
+
+  .artwork--desktop-centered .artwork__open img {
+    margin-inline: auto;
   }
 
   .artwork__content {

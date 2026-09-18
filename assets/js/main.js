@@ -312,7 +312,7 @@
     root.innerHTML = `
       <section class="artwork-sequence ${project.works.some((work) => work.captionEmbedded) ? "artwork-sequence--portfolio" : ""}" aria-label="${copy("artworksIn")} ${escapeHtml(project.title)}">
         ${project.works.map((work, index) => `
-          <figure class="artwork artwork--${escapeHtml(work.size || "medium")} ${work.captionEmbedded ? "artwork--portfolio-page" : ""} reveal" data-lightbox-index="${index}">
+          <figure class="artwork artwork--${escapeHtml(work.size || "medium")} ${work.captionEmbedded ? "artwork--portfolio-page" : ""} ${work.desktopCentered ? "artwork--desktop-centered" : ""} reveal" data-lightbox-index="${index}">
             <div class="artwork__content">
               <button class="artwork__open" type="button" aria-label="${copy("enlarge")} ${escapeHtml(work.title)}">
                 <img src="${work.src}" alt="${escapeHtml(work.alt)}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async">
