@@ -4,6 +4,7 @@
   const data = window.PORTFOLIO_DATA;
   const page = document.body.dataset.page;
   const languageKey = "francisca-portfolio-language";
+  const imageVersion = "20260919-hq";
   let language = "pt";
 
   try {
@@ -202,6 +203,10 @@
       .replaceAll("'", "&#039;");
   }
 
+  function imageSource(source) {
+    return `${source}${source.includes("?") ? "&" : "?"}v=${imageVersion}`;
+  }
+
   function headerTemplate() {
     const links = [
       ["works", copy("works"), "works.html"],
@@ -253,7 +258,7 @@
     return `
       <article class="project-card reveal ${index % 3 === 1 ? "project-card--shifted" : ""}">
         <a class="project-card__image ${project.coverMode === "natural" ? "project-card__image--natural" : ""}" href="${projectUrl(project.slug)}" aria-label="${copy("view")} ${escapeHtml(project.title)}">
-          <img src="${project.cover}" alt="${escapeHtml(project.coverAlt)}" loading="lazy" decoding="async">
+          <img src="${imageSource(project.cover)}" alt="${escapeHtml(project.coverAlt)}" loading="lazy" decoding="async">
         </a>
         <div class="project-card__meta">
           <div>
@@ -272,7 +277,7 @@
       <section class="home-feature" aria-label="${copy("featuredWork")}">
         <a class="hero__art home-feature__art" href="${projectUrl("as-pedras-mantem-se-as-mesmas")}" aria-label="${copy("view")} As pedras mantêm-se as mesmas">
           <span class="hero__plane" aria-hidden="true"></span>
-          <img src="assets/images/homepage-totem.webp" alt="Totem sculpture and related framed work in an exhibition setting">
+          <img src="${imageSource("assets/images/homepage-totem.webp")}" alt="Totem sculpture and related framed work in an exhibition setting">
         </a>
       </section>
     `;
@@ -315,7 +320,7 @@
           <figure class="artwork artwork--${escapeHtml(work.size || "medium")} ${work.captionEmbedded ? "artwork--portfolio-page" : ""} ${work.desktopCentered ? "artwork--desktop-centered" : ""} reveal" data-lightbox-index="${index}">
             <div class="artwork__content">
               <button class="artwork__open" type="button" aria-label="${copy("enlarge")} ${escapeHtml(work.title)}">
-                <img src="${work.src}" alt="${escapeHtml(work.alt)}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async">
+                <img src="${imageSource(work.src)}" alt="${escapeHtml(work.alt)}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async">
               </button>
               ${work.captionEmbedded ? "" : `<figcaption>
                 <span class="artwork__title">${escapeHtml(work.title)}.</span>
@@ -400,7 +405,7 @@
     function show(index) {
       activeIndex = (index + works.length) % works.length;
       const work = works[activeIndex];
-      image.src = work.src;
+      image.src = imageSource(work.src);
       image.alt = work.alt;
       caption.hidden = Boolean(work.captionEmbedded);
       caption.textContent = work.captionEmbedded ? "" : (work.details ? `${work.title} — ${translate(work.details)}` : work.title);
