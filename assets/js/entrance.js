@@ -36,11 +36,11 @@
 
   const desktopWorks = [
     {
-      src: "assets/images/entrance-desktop-blue-hd.webp",
+      src: "assets/images/entrance-desktop-blue-restored-4k.webp",
       position: "center"
     },
     {
-      src: "assets/images/entrance-desktop-redblack-hd.webp",
+      src: "assets/images/entrance-desktop-redblack-restored-4k.webp",
       position: "center"
     }
   ];
