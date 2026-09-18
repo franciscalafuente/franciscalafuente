@@ -4,7 +4,7 @@
   const entrance = document.querySelector(".entrance");
   if (!entrance) return;
 
-  const works = [
+  const mobileWorks = [
     {
       mobile: "assets/images/entrance-art.webp",
       desktop: "assets/images/entrance-art-desktop.webp",
@@ -34,12 +34,27 @@
     }
   ];
 
-  const landscape = window.matchMedia("(orientation: landscape)");
+  const desktopWorks = [
+    {
+      src: "assets/images/entrance-desktop-blue-hd.webp",
+      position: "center"
+    },
+    {
+      src: "assets/images/entrance-desktop-redblack-hd.webp",
+      position: "center"
+    }
+  ];
+
+  const desktop = window.matchMedia("(min-width: 821px)");
   const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
   const tracks = {
     top: createTrack(entrance.querySelector(".entrance__strip--top"), "right", "Top"),
     bottom: createTrack(entrance.querySelector(".entrance__strip--bottom"), "left", "Bottom")
   };
+
+  function activeWorks() {
+    return desktop.matches ? desktopWorks : mobileWorks;
+  }
 
   function createTrack(element, direction, part) {
     return {
@@ -54,18 +69,18 @@
 
   function sourceFor(work) {
     if (work.src) return work.src;
-    return landscape.matches ? work.desktop : work.mobile;
+    return desktop.matches ? work.desktop : work.mobile;
   }
 
   function setImage(image, work, part) {
-    const isLandscape = landscape.matches;
-    const mode = isLandscape ? "desktop" : "mobile";
+    const isDesktop = desktop.matches;
+    const mode = isDesktop ? "desktop" : "mobile";
     image.src = sourceFor(work);
-    image.style.objectPosition = (isLandscape ? work.desktopPosition : work.mobilePosition) || work.position || "center";
-    image.style.setProperty("--entrance-image-scale", String((isLandscape ? work.desktopScale : work.mobileScale) || 1));
+    image.style.objectPosition = (isDesktop ? work.desktopPosition : work.mobilePosition) || work.position || "center";
+    image.style.setProperty("--entrance-image-scale", String((isDesktop ? work.desktopScale : work.mobileScale) || 1));
     image.style.setProperty(
       "--entrance-image-translate",
-      work[mode + part + "Translate"] || (isLandscape ? work.desktopTranslate : work.mobileTranslate) || "0 0"
+      work[mode + part + "Translate"] || (isDesktop ? work.desktopTranslate : work.mobileTranslate) || "0 0"
     );
   }
 
@@ -87,14 +102,15 @@
     });
   }
 
-  async function move(track, nextIndex) {
+  async function move(track, nextIndex, direction = track.direction) {
+    const works = activeWorks();
     await loadImage(track.next, works[nextIndex], track.part);
 
     return new Promise((resolve) => {
       const incoming = track.next;
       const outgoing = track.current;
-      const incomingStart = track.direction === "right" ? "translateX(-100%)" : "translateX(100%)";
-      const outgoingEnd = track.direction === "right" ? "translateX(100%)" : "translateX(-100%)";
+      const incomingStart = direction === "right" ? "translateX(-100%)" : "translateX(100%)";
+      const outgoingEnd = direction === "right" ? "translateX(100%)" : "translateX(-100%)";
       let completed = false;
 
       track.moving = true;
@@ -135,16 +151,18 @@
   }
 
   function refreshResponsiveImages() {
+    const works = activeWorks();
     Object.values(tracks).forEach((track) => {
+      track.index = track.index % works.length;
       if (!track.moving) setImage(track.current, works[track.index], track.part);
     });
   }
 
-  setImage(tracks.top.current, works[0], tracks.top.part);
-  setImage(tracks.bottom.current, works[0], tracks.bottom.part);
-  landscape.addEventListener("change", refreshResponsiveImages);
+  setImage(tracks.top.current, activeWorks()[0], tracks.top.part);
+  setImage(tracks.bottom.current, activeWorks()[0], tracks.bottom.part);
+  desktop.addEventListener("change", refreshResponsiveImages);
 
-  works.forEach((work) => {
+  [...mobileWorks, ...desktopWorks].forEach((work) => {
     const image = new Image();
     image.src = sourceFor(work);
   });
@@ -155,19 +173,31 @@
     await delay(2200);
 
     while (true) {
-      for (let index = 1; index < works.length; index += 1) {
-        await Promise.all([
-          move(tracks.top, index),
-          move(tracks.bottom, index)
-        ]);
+      if (desktop.matches) {
+        await move(tracks.top, 1, "right");
+        await delay(550);
+        await move(tracks.bottom, 1, "left");
         await delay(1700);
-      }
+        await move(tracks.top, 0, "left");
+        await delay(550);
+        await move(tracks.bottom, 0, "right");
+        await delay(2600);
+      } else {
+        const works = activeWorks();
+        for (let index = 1; index < works.length; index += 1) {
+          await Promise.all([
+            move(tracks.top, index),
+            move(tracks.bottom, index)
+          ]);
+          await delay(1700);
+        }
 
-      await Promise.all([
-        move(tracks.top, 0),
-        move(tracks.bottom, 0)
-      ]);
-      await delay(2600);
+        await Promise.all([
+          move(tracks.top, 0),
+          move(tracks.bottom, 0)
+        ]);
+        await delay(2600);
+      }
     }
   }
 
