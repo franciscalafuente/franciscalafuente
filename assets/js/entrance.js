@@ -10,31 +10,12 @@
       desktop: "assets/images/entrance-art-desktop.webp",
       position: "center"
     },
-    {
-      mobile: "assets/images/entrance-sequence-01-mobile.webp",
-      desktop: "assets/images/entrance-sequence-01-desktop.webp",
-      position: "center"
-    },
-    {
-      mobile: "assets/images/entrance-sequence-02-mobile.webp",
-      desktop: "assets/images/entrance-sequence-02-desktop.webp",
-      position: "center"
-    },
-    {
-      mobile: "assets/images/entrance-sequence-03-mobile.webp",
-      desktop: "assets/images/entrance-sequence-03-desktop.webp",
-      position: "center"
-    },
-    {
-      mobile: "assets/images/entrance-sequence-04-mobile.webp",
-      desktop: "assets/images/entrance-sequence-04-desktop.webp",
-      position: "center"
-    },
-    {
-      mobile: "assets/images/entrance-sequence-05-mobile.webp",
-      desktop: "assets/images/entrance-sequence-05-desktop.webp",
-      position: "center"
-    }
+    { src: "assets/images/entrance-work-02.webp", position: "center" },
+    { src: "assets/images/entrance-work-03.webp", position: "center" },
+    { src: "assets/images/entrance-work-04.webp", position: "center" },
+    { src: "assets/images/entrance-work-05.webp", position: "center" },
+    { src: "assets/images/entrance-work-06.webp", position: "center" },
+    { src: "assets/images/entrance-work-07.webp", position: "center" }
   ];
 
   const landscape = window.matchMedia("(orientation: landscape)");
