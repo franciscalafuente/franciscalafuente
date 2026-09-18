@@ -58,28 +58,62 @@ body.menu-open {
 }
 
 .entrance {
+  --entrance-upper-edge: 46%;
+  --entrance-lower-edge: 58%;
   position: fixed;
   inset: 0;
   display: block;
   overflow: hidden;
+  background: #f8f7f5;
   cursor: pointer;
 }
 
-.entrance__picture {
+.entrance__strip {
   position: absolute;
   inset: 0;
+  z-index: 1;
+  display: block;
+  overflow: hidden;
+  pointer-events: none;
 }
 
-.entrance__art {
+.entrance__strip--top {
+  clip-path: inset(0 0 calc(100% - var(--entrance-upper-edge)) 0);
+}
+
+.entrance__strip--bottom {
+  clip-path: inset(var(--entrance-lower-edge) 0 0 0);
+}
+
+.entrance__slide {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
   max-width: none;
   object-fit: cover;
   object-position: center;
+  transform: translateX(0);
+  will-change: transform;
+}
+
+.entrance__slide--next {
+  visibility: hidden;
+}
+
+.entrance__signature-band {
+  position: absolute;
+  z-index: 2;
+  top: var(--entrance-upper-edge);
+  right: 0;
+  bottom: calc(100% - var(--entrance-lower-edge));
+  left: 0;
+  background: #f8f7f5;
 }
 
 .entrance__signature {
   position: absolute;
+  z-index: 3;
   top: 52%;
   left: 50%;
   width: min(80vw, 68vh);
@@ -213,6 +247,17 @@ main {
 
 .text-link:hover {
   gap: 1rem;
+}
+
+.home-feature {
+  width: min(100%, var(--max));
+  margin: 0 auto;
+  padding: clamp(0.75rem, 2.5vw, 2.25rem) var(--page) clamp(3rem, 6vw, 5.5rem);
+}
+
+.home-feature__art {
+  width: min(100%, 62rem);
+  margin: 0 auto;
 }
 
 .hero {
@@ -368,6 +413,15 @@ main {
   transition: transform 600ms cubic-bezier(0.2, 0.65, 0.25, 1);
 }
 
+.project-card__image.project-card__image--natural {
+  min-height: 0;
+}
+
+.project-card__image--natural img {
+  height: auto;
+  max-height: none;
+}
+
 .project-card__image:hover img {
   transform: scale(1.025);
 }
@@ -378,7 +432,6 @@ main {
   justify-content: space-between;
   gap: 2rem;
   padding-top: 1.15rem;
-  border-top: 1px solid var(--ink);
 }
 
 .project-card__meta h2 {
@@ -497,10 +550,33 @@ main {
 .artwork-sequence {
   display: grid;
   grid-template-columns: repeat(12, 1fr);
-  gap: clamp(7rem, 13vw, 14rem) 2rem;
+  gap: clamp(2.25rem, 4vw, 4rem) 2rem;
   width: min(100%, var(--max));
   margin: 0 auto;
-  padding: clamp(7rem, 13vw, 13rem) var(--page);
+  padding: clamp(2rem, 5vw, 5rem) var(--page) clamp(4rem, 8vw, 8rem);
+}
+
+.project-page--night {
+  background: var(--night);
+  color: var(--paper);
+}
+
+.project-page--night .artwork figcaption,
+.project-page--night .artwork figcaption span:last-child {
+  color: rgba(246, 245, 243, 0.68);
+}
+
+.project-page--night .project-pagination {
+  border-top-color: rgba(246, 245, 243, 0.3);
+}
+
+.project-page--night .project-pagination a + a {
+  border-left-color: rgba(246, 245, 243, 0.3);
+}
+
+.project-page--night .project-pagination a:hover {
+  background: var(--paper);
+  color: var(--night);
 }
 
 .artwork {
@@ -524,6 +600,10 @@ main {
   grid-column: 3 / span 8;
 }
 
+.artwork--portfolio-page {
+  grid-column: 1 / -1;
+}
+
 .artwork--dark {
   background: var(--night);
 }
@@ -543,24 +623,25 @@ main {
   object-fit: contain;
 }
 
-.artwork figcaption {
-  display: flex;
-  justify-content: space-between;
-  gap: 2rem;
-  margin-top: 1rem;
-  padding-top: 0.75rem;
-  border-top: 1px solid var(--line);
-  font-size: 0.86rem;
+.artwork--portfolio-page .artwork__open img {
+  max-height: none;
 }
 
-.artwork figcaption span:last-child {
-  color: var(--muted);
+.artwork figcaption {
+  max-width: 42rem;
+  margin: 0.75rem 0 0 auto;
+  color: #5f5e5b;
+  font-family: var(--portfolio-title);
+  font-size: clamp(0.75rem, 0.82vw, 0.86rem);
+  line-height: 1.45;
   text-align: right;
 }
 
-.artwork figcaption span:first-child {
-  font-family: var(--portfolio-title);
-  font-size: 1rem;
+.artwork figcaption span:last-child {
+  color: inherit;
+}
+
+.artwork__title {
   font-style: italic;
 }
 
@@ -684,6 +765,11 @@ main {
   border-top: 1px solid var(--ink);
 }
 
+.cv-section:first-child {
+  padding-top: 0;
+  border-top: 0;
+}
+
 .cv-section h2 {
   margin: 0;
   font-family: var(--serif);
@@ -696,6 +782,10 @@ main {
   grid-template-columns: 8rem 1fr;
   gap: 1.5rem;
   padding: 0 0 2rem;
+}
+
+.cv-item.cv-item--undated {
+  grid-template-columns: 1fr;
 }
 
 .cv-item time {
@@ -721,20 +811,14 @@ main {
 }
 
 .contact-page {
-  display: grid;
-  grid-template-columns: 1.15fr 0.85fr;
-  gap: 4rem;
-  align-items: start;
   width: min(100%, var(--max));
   min-height: calc(100vh - 5.5rem);
   margin: 0 auto;
-  padding: clamp(5rem, 10vw, 10rem) var(--page) 8rem;
+  padding: clamp(5rem, 9vw, 9rem) var(--page) 8rem;
 }
 
 .contact-details {
-  padding: 3rem 0;
-  border-top: 1px solid var(--ink);
-  border-bottom: 1px solid var(--ink);
+  max-width: 34rem;
 }
 
 .contact-details p {
@@ -787,9 +871,42 @@ main {
   text-transform: uppercase;
 }
 
-.site-footer div {
+.site-footer__actions,
+.site-footer__links,
+.language-switcher {
   display: flex;
+  align-items: center;
+}
+
+.site-footer__actions {
+  gap: clamp(2rem, 5vw, 5rem);
+}
+
+.site-footer__links {
   gap: 2rem;
+}
+
+.language-switcher {
+  gap: 0.45rem;
+}
+
+.language-switcher button {
+  border: 0;
+  padding: 0;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  letter-spacing: inherit;
+  cursor: pointer;
+}
+
+.language-switcher button[aria-pressed="true"] {
+  color: var(--ink);
+}
+
+.language-switcher button:hover,
+.language-switcher button:focus-visible {
+  color: var(--cobalt);
 }
 
 .lightbox {
@@ -1008,6 +1125,11 @@ main {
 }
 
 @media (orientation: landscape) {
+  .entrance {
+    --entrance-upper-edge: 36%;
+    --entrance-lower-edge: 64%;
+  }
+
   .entrance__signature {
     top: 49%;
     width: min(76vw, 105vh);
@@ -1036,14 +1158,9 @@ main {
     min-height: 18rem;
   }
 
-  .project-card__meta,
-  .artwork figcaption {
+  .project-card__meta {
     flex-direction: column;
     gap: 0.35rem;
-  }
-
-  .artwork figcaption span:last-child {
-    text-align: left;
   }
 
   .project-pagination {
@@ -1055,6 +1172,10 @@ main {
     border-left: 0;
   }
 
+  .project-page--night .project-pagination a + a {
+    border-top-color: rgba(246, 245, 243, 0.3);
+  }
+
   .cv-item {
     grid-template-columns: 1fr;
     gap: 0.5rem;
@@ -1064,6 +1185,11 @@ main {
     align-items: flex-start;
     flex-direction: column;
     gap: 1rem;
+  }
+
+  .site-footer__actions {
+    justify-content: space-between;
+    width: 100%;
   }
 
   .lightbox__previous {

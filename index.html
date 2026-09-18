@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="pt-PT">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -10,12 +10,18 @@
 </head>
 <body class="entrance-page">
   <a class="entrance" href="home.html" aria-label="Enter Francisca Lafuente's portfolio">
-    <picture class="entrance__picture" aria-hidden="true">
-      <source media="(orientation: landscape)" srcset="assets/images/entrance-art-desktop.webp">
-      <img class="entrance__art" src="assets/images/entrance-art.webp" alt="">
-    </picture>
+    <span class="entrance__strip entrance__strip--top" aria-hidden="true">
+      <img class="entrance__slide entrance__slide--current" src="assets/images/entrance-art.webp" alt="">
+      <img class="entrance__slide entrance__slide--next" src="assets/images/entrance-art.webp" alt="">
+    </span>
+    <span class="entrance__strip entrance__strip--bottom" aria-hidden="true">
+      <img class="entrance__slide entrance__slide--current" src="assets/images/entrance-art.webp" alt="">
+      <img class="entrance__slide entrance__slide--next" src="assets/images/entrance-art.webp" alt="">
+    </span>
+    <span class="entrance__signature-band" aria-hidden="true"></span>
     <img class="entrance__signature" src="assets/images/signature-transparent.png" alt="Francisca Lafuente">
     <span class="sr-only">Enter portfolio</span>
   </a>
+  <script src="assets/js/entrance.js"></script>
 </body>
 </html>

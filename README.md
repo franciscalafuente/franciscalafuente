@@ -14,6 +14,8 @@ Most content is stored in:
 
 `dist/assets/js/content.js`
 
+Portuguese and English interface translations are stored near the top of `dist/assets/js/main.js`. The site opens in Portuguese and remembers the visitor's `EN | PT` selection.
+
 The entrance uses separate artwork crops for portrait and landscape screens: `dist/assets/images/entrance-art.webp` and `dist/assets/images/entrance-art-desktop.webp`. The responsive signature layer used on the entrance and main homepage is stored in `dist/assets/images/signature-transparent.png`.
 
 ### Change biography or contact information
