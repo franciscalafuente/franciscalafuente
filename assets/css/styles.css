@@ -1017,18 +1017,25 @@ main {
   }
 
   .artwork__open {
-    display: flex;
-    justify-content: center;
+    display: block;
   }
 
   .artwork__open img {
+    display: block;
     width: auto;
     max-width: 100%;
     height: auto;
   }
 
+  .artwork__content {
+    width: max-content;
+    max-width: 100%;
+    margin-inline: auto;
+  }
+
   .artwork figcaption {
-    width: min(100%, 42rem);
+    width: 100%;
+    max-width: none;
   }
 }
 

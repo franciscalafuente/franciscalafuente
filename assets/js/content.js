@@ -29,7 +29,7 @@ window.PORTFOLIO_DATA = {
   projects: [
     {
       slug: "mapear-ausencias",
-      title: "Mapear ausências",
+      title: "Mapear Ausências",
       years: "2022–2023",
       discipline: "Screen printing",
       summary: "Organic fragments are displaced, interrupted and reassembled, turning absence into an active part of the image.",
@@ -40,8 +40,8 @@ window.PORTFOLIO_DATA = {
       works: [
         {
           src: "assets/images/mapear-v.webp",
-          alt: "Mapear ausências, a vertical abstract print in blue, yellow and red",
-          title: "Mapear ausências",
+          alt: "Mapear Ausências, a vertical abstract print in blue, yellow and red",
+          title: "Mapear Ausências",
           details: "2023. Serigrafia s/papel. 90 x 60 cm",
           size: "portrait"
         }
@@ -107,7 +107,7 @@ window.PORTFOLIO_DATA = {
       slug: "sobre-a-raiz",
       title: "Sobre a raiz",
       years: "2022",
-      discipline: "Engraving artist’s book · installation",
+      discipline: "Engraving artist’s book",
       summary: "Six etched elements unfold through a spatial structure, shifting the artist’s book from a sequence held in the hand into an environment experienced by the body.",
       cover: "assets/images/sobre-raiz-installation.webp",
       coverAlt: "Geometric white installation containing a framed monochrome print",
@@ -187,9 +187,9 @@ window.PORTFOLIO_DATA = {
     },
     {
       slug: "as-pedras-mantem-se-as-mesmas",
-      title: "As pedras mantêm-se as mesmas.",
+      title: "As pedras mantêm-se as mesmas",
       years: "2024",
-      discipline: "Sculpture",
+      discipline: "Installation · mixed media",
       summary: "Fabric, cardboard and glazed stoneware meet in a sculptural installation built through accumulation and balance.",
       cover: "assets/images/totem-installation.webp",
       coverAlt: "Sculptural installation with a stacked ceramic form and a framed vertical element",
@@ -268,7 +268,7 @@ window.PORTFOLIO_DATA = {
           src: "assets/images/totem-ii.webp",
           alt: "Ceramic Totem with a pale blue face and dark brown body",
           title: "Totem II",
-          details: "2022. Barro, grés e faiança colorida. 28,5 × 18 × 18 cm",
+          details: "2022. Argila, grés e faiança colorida. 28,5 × 18 × 18 cm",
           size: "portrait"
         },
         {

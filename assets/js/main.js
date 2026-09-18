@@ -74,7 +74,8 @@
     "Printmaking · mixed media": "Gravura · técnica mista",
     "Screen printing": "Serigrafia",
     "Collage · serigraphy · painting": "Colagem · serigrafia · pintura",
-    "Engraving artist’s book · installation": "Livro de artista de gravura · instalação",
+    "Engraving artist’s book": "Livro de artista de gravura",
+    "Installation · mixed media": "Instalação · técnica mista",
     "Sculpture": "Escultura",
     "Sculpture · mixed media": "Escultura · técnica mista",
     "Digital photography": "Fotografia digital",
@@ -126,7 +127,7 @@
     "2021. Fotografia digital": "2021. Digital photography",
     "2005–2023. Cartão, cola branca, tecido, tinta acrílica, grés. Medidas variáveis": "2005–2023. Cardboard, PVA glue, fabric, acrylic paint and stoneware. Variable dimensions",
     "2022. Faiança. 35,5 × 17 × 17 cm": "2022. Earthenware. 35.5 × 17 × 17 cm",
-    "2022. Barro, grés e faiança colorida. 28,5 × 18 × 18 cm": "2022. Clay, stoneware and coloured earthenware. 28.5 × 18 × 18 cm",
+    "2022. Argila, grés e faiança colorida. 28,5 × 18 × 18 cm": "2022. Clay, stoneware and coloured earthenware. 28.5 × 18 × 18 cm",
     "2022. Grés, raku. 13,5 × 6 × 5,5 cm": "2022. Stoneware, raku. 13.5 × 6 × 5.5 cm",
     "2005–2023. Vista de conjunto": "2005–2023. Group view",
     "Formação Académica": "Academic Education",
@@ -312,13 +313,15 @@
       <section class="artwork-sequence ${project.works.some((work) => work.captionEmbedded) ? "artwork-sequence--portfolio" : ""}" aria-label="${copy("artworksIn")} ${escapeHtml(project.title)}">
         ${project.works.map((work, index) => `
           <figure class="artwork artwork--${escapeHtml(work.size || "medium")} ${work.captionEmbedded ? "artwork--portfolio-page" : ""} reveal" data-lightbox-index="${index}">
-            <button class="artwork__open" type="button" aria-label="${copy("enlarge")} ${escapeHtml(work.title)}">
-              <img src="${work.src}" alt="${escapeHtml(work.alt)}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async">
-            </button>
-            ${work.captionEmbedded ? "" : `<figcaption>
-              <span class="artwork__title">${escapeHtml(work.title)}.</span>
-              ${work.details ? `<span>${escapeHtml(translate(work.details))}.</span>` : ""}
-            </figcaption>`}
+            <div class="artwork__content">
+              <button class="artwork__open" type="button" aria-label="${copy("enlarge")} ${escapeHtml(work.title)}">
+                <img src="${work.src}" alt="${escapeHtml(work.alt)}" loading="${index < 2 ? "eager" : "lazy"}" decoding="async">
+              </button>
+              ${work.captionEmbedded ? "" : `<figcaption>
+                <span class="artwork__title">${escapeHtml(work.title)}.</span>
+                ${work.details ? `<span>${escapeHtml(translate(work.details))}.</span>` : ""}
+              </figcaption>`}
+            </div>
           </figure>
         `).join("")}
       </section>
