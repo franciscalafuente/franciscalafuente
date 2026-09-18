@@ -10,11 +10,31 @@
       desktop: "assets/images/entrance-art-desktop.webp",
       position: "center"
     },
-    { src: "assets/images/mapear-ii.webp", position: "center" },
-    { src: "assets/images/visoes-sem-ser-iii.webp", position: "center" },
-    { src: "assets/images/sobre-raiz-close-02.webp", position: "center" },
-    { src: "assets/images/deriva-continental.webp", position: "center" },
-    { src: "assets/images/untitled-blue.webp", position: "center" }
+    {
+      mobile: "assets/images/entrance-sequence-01-mobile.webp",
+      desktop: "assets/images/entrance-sequence-01-desktop.webp",
+      position: "center"
+    },
+    {
+      mobile: "assets/images/entrance-sequence-02-mobile.webp",
+      desktop: "assets/images/entrance-sequence-02-desktop.webp",
+      position: "center"
+    },
+    {
+      mobile: "assets/images/entrance-sequence-03-mobile.webp",
+      desktop: "assets/images/entrance-sequence-03-desktop.webp",
+      position: "center"
+    },
+    {
+      mobile: "assets/images/entrance-sequence-04-mobile.webp",
+      desktop: "assets/images/entrance-sequence-04-desktop.webp",
+      position: "center"
+    },
+    {
+      mobile: "assets/images/entrance-sequence-05-mobile.webp",
+      desktop: "assets/images/entrance-sequence-05-desktop.webp",
+      position: "center"
+    }
   ];
 
   const landscape = window.matchMedia("(orientation: landscape)");
@@ -48,7 +68,23 @@
     return new Promise((resolve) => window.setTimeout(resolve, milliseconds));
   }
 
-  function move(track, nextIndex) {
+  function loadImage(image, work) {
+    return new Promise((resolve) => {
+      setImage(image, work);
+
+      if (image.complete && image.naturalWidth > 0) {
+        resolve();
+        return;
+      }
+
+      image.addEventListener("load", resolve, { once: true });
+      image.addEventListener("error", resolve, { once: true });
+    });
+  }
+
+  async function move(track, nextIndex) {
+    await loadImage(track.next, works[nextIndex]);
+
     return new Promise((resolve) => {
       const incoming = track.next;
       const outgoing = track.current;
@@ -57,7 +93,6 @@
       let completed = false;
 
       track.moving = true;
-      setImage(incoming, works[nextIndex]);
       incoming.style.visibility = "visible";
       incoming.style.transition = "none";
       incoming.style.transform = incomingStart;
@@ -83,14 +118,14 @@
       incoming.addEventListener("transitionend", finish, { once: true });
       requestAnimationFrame(() => {
         requestAnimationFrame(() => {
-          const transition = "transform 900ms cubic-bezier(0.76, 0, 0.24, 1)";
+          const transition = "transform 1100ms cubic-bezier(0.76, 0, 0.24, 1)";
           incoming.style.transition = transition;
           outgoing.style.transition = transition;
           incoming.style.transform = "translateX(0)";
           outgoing.style.transform = outgoingEnd;
         });
       });
-      window.setTimeout(finish, 1200);
+      window.setTimeout(finish, 1400);
     });
   }
 
@@ -118,15 +153,17 @@
 
     while (true) {
       for (let index = 1; index < works.length; index += 1) {
-        await move(tracks.top, index);
-        await delay(700);
-        await move(tracks.bottom, index);
-        await delay(1200);
+        await Promise.all([
+          move(tracks.top, index),
+          move(tracks.bottom, index)
+        ]);
+        await delay(1700);
       }
 
-      await move(tracks.top, 0);
-      await delay(700);
-      await move(tracks.bottom, 0);
+      await Promise.all([
+        move(tracks.top, 0),
+        move(tracks.bottom, 0)
+      ]);
       await delay(2600);
     }
   }
